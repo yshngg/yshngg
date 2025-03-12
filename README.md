@@ -15,4 +15,4 @@ Here are some ideas to get you started:
 - ⚡ Fun fact: ...
 -->
 
-- [Node Problem Detector Design Doc](Node Problem Detector V0 (EXTERNAL).md)
+- [Node Problem Detector Design Doc](./Node Problem Detector V0 (EXTERNAL).md)
