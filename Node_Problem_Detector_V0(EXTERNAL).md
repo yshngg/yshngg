@@ -4,39 +4,39 @@
 *Authors: lantaol@google.com*  
 *Last Updated: 2016-06-06*
 
-[Objective](#objective)  
-[Background](#background)  
-[Motivation](#motivation)  
-[Requirements](#requirements)  
-[Overview](#overview)  
-[Key Concepts](#key-concepts)  
-[v0 (Kubernetes v1.3)](#v0-\(kubernetes-v1.3\))  
-[Future (Kubernetes v1.4 and beyond)](#future-\(kubernetes-v1.4-and-beyond\))  
-[OutOfScope](#outofscope)  
-[System Diagram](#system-diagram)  
-[Detailed Design](#detailed-design)  
-[API](#api)  
-[Problem Type](#problem-type)  
-[NodeCondition](#nodecondition)  
-[Event](#event)  
-[Architecture](#architecture)  
-[Proposals](#proposals)  
-[Deployment](#deployment)  
-[Proposals](#proposals-1)  
-[Report Pipeline](#report-pipeline)  
-[Problem Daemon \-\> NodeProblemDetector](#problem-daemon--\>-nodeproblemdetector)  
-[NodeProblemDetector \-\> APIServer](#nodeproblemdetector--\>-apiserver)  
-[Problem Report Interface](#problem-report-interface)  
-[LogMonitor](#logmonitor)  
-[Project Information](#project-information)
+- [Objective](#objective)
+- [Background](#background)
+  - [Motivation](#motivation)
+  - [Requirements](#requirements)
+- [Overview](#overview)
+  - [Key Concepts](#key-concepts)
+  - [v0 (Kubernetes v1.3)](<#v0-(kubernetes-v1.3)>)
+  - [Future (Kubernetes v1.4 and beyond)](<#future-(kubernetes-v1.4-and-beyond)>)
+  - [OutOfScope](#outofscope)
+  - [System Diagram](#system-diagram)
+- [Detailed Design](#detailed-design)
+  - [API](#api)
+    - [Problem Type](#problem-type)
+    - [NodeCondition](#nodecondition)
+    - [Event](#event)
+  - [Architecture](#architecture)
+    - [Proposals](#proposals)
+  - [Deployment](#deployment)
+    - [Proposals](#proposals-1)
+  - [Report Pipeline](#report-pipeline)
+    - [Problem Daemon \-\> NodeProblemDetector](#problem-daemon-->-nodeproblemdetector)
+    - [NodeProblemDetector \-\> APIServer](#nodeproblemdetector-->-apiserver)
+  - [Problem Report Interface](#problem-report-interface)
+  - [LogMonitor](#logmonitor)
+- [Project Information](#project-information)
 
-# **Objective** {#objective}
+# Objective
 
 NodeProblemDetector aims to make node problems visible to the control-plane. NodeProblemDetector will collect problems from various node problem daemons and report them to the control-plane. NodeProblemDetector will be easy to integrate with third-party node problem daemon.
 
-# **Background** {#background}
+# Background
 
-## **Motivation** {#motivation}
+## Motivation
 
 There are tons of problems could happen on a node such as hardware problems like bad cpu, memory and disk; kernel problems like kernel deadlock and corrupted file system; container runtime problems like unresponsive runtime daemon etc. Many of them could make the node unavailable for pods.  
 Currently these problems are invisible to Kubernetes. Even when there are critical node problems, Kubernetes will continue scheduling pods to the bad nodes. This has caused a lot of issues: [\#19986](https://github.com/kubernetes/kubernetes/issues/19986#issuecomment-174141729), [\#20096](https://github.com/kubernetes/kubernetes/issues/20096), [\#23327](https://github.com/kubernetes/kubernetes/issues/23327), [\#24295](https://github.com/kubernetes/kubernetes/issues/24295) etc.  
@@ -49,7 +49,7 @@ The existing node daemons of Kubernetes are focusing on different aspects, but n
 
 Therefore we need to introduce a new node daemon which is focusing on node health monitoring and node problem detection \- *NodeProblemDetector*.
 
-## **Requirements** {#requirements}
+## Requirements
 
 As an open source container orchestration platform, people may run Kubernetes in heterogeneous environment.
 
@@ -59,9 +59,9 @@ As an open source container orchestration platform, people may run Kubernetes in
 * **Security:** Node problems will be shown to users and may change system behaviour like scheduling decision in the future. It should be guaranteed that only qualified daemon could report node problems.   
 * **Manageability:** Even in the same cluster, the cluster could be hybrid and the nodes could be heterogeneous. People may want to run special health monitor on master node, GPU health monitor on GPU nodes, windows health monitor on Windows nodes etc. So it should be possible for users to deploy different problem daemons on different nodes.
 
-# **Overview** {#overview}
+# Overview
 
-## **Key Concepts** {#key-concepts}
+## Key Concepts
 
 * **Node Problem:** Node problems is the problem occurs to the node that may affect Kubernetes stability, includes:  
   * Hardware problem. (Bad cpu, bad memory, bad disk, bad gpu etc.)  
@@ -72,7 +72,7 @@ As an open source container orchestration platform, people may run Kubernetes in
   * could be tools dedicated for Kubernetes’ use case.  
   * could also be an existing node health monitoring solution.
 
-## **v0 (Kubernetes v1.3)** {#v0-(kubernetes-v1.3)}
+## v0 (Kubernetes v1.3)
 
 * API: NodeProblemDetector will use NodeCondition and Event to report node problems to apiserver. A transient problem will be reported as an Event, and a permanent problem as a NodeCondition.  
 * Pipeline:   
@@ -81,38 +81,38 @@ As an open source container orchestration platform, people may run Kubernetes in
 * Deployment: NodeProblemDetector and problem daemons will be shipped in a single binary. It will be an [add-on](https://github.com/kubernetes/kubernetes/tree/master/cluster/addons) [DaemonSet](http://kubernetes.io/docs/admin/daemons/) running on each node.  
 * KernelMonitor: Introduce KernelMonitor as the first problem daemon for both Kubernetes’ urgent requirement and demonstration purpose. KernelMonitor will be monitoring kernel log and report kernel problems according to predefined rules.
 
-## **Future (Kubernetes v1.4 and beyond)** {#future-(kubernetes-v1.4-and-beyond)}
+## Future (Kubernetes v1.4 and beyond)
 
 * Pipeline: Expose problem report interface from NodeProblemDetector, so that other problem daemons could integrate with it. After this, work with the community partners to integrate their problem daemons with Kubernetes.  
 * Deployment: Run different problem daemons as separate containers in the NodeProblemDetector DaemonSet.  
 * LogMonitor: Generalize the KernelMonitor to be a general purpose log monitor, and use it to detect some simple but critical Docker issues.  
 * ControlPlane: Introduce RemedyController to the ecosystem to convert problem related Events and NodeConditions into [Taint](https://github.com/kubernetes/kubernetes/blob/master/docs/design/taint-toleration-dedicated.md), so as to inform scheduler to stop scheduling new pods to bad node and reschedule existing pods to other nodes. 
 
-## **OutOfScope** {#outofscope}
+## OutOfScope
 
 * NodeProblemDetector only makes it possible to integrate node problem daemons with Kubernetes. The responsibility of problem detection should be taken by specific node problem daemons.  
 * Different node problem daemons remain owned by their respective vendors, Kubernetes node team will consult and support integrating the node problem daemons with NodeProblemDetector.   
 * KernelMonitor (LogMonitor in the future) only aims to detect known kernel and docker issues which have been proved to be critical to Kubernetes. It won’t become a general purpose kernel or docker problem detector.
 
-## **System Diagram** {#system-diagram}
+## System Diagram
 
 ![][image1]
 
-# **Detailed Design** {#detailed-design}
+# Detailed Design
 
-## **API** {#api}
+## API
 
 Today, we’ve already used Event and NodeCondition to report some node problems such as OutOfDisk ([\#4135](https://github.com/kubernetes/kubernetes/issues/4135)), MemoryPressure ([\#21274](https://github.com/kubernetes/kubernetes/pull/21274)), NetworkUnavailable ([\#26415](https://github.com/kubernetes/kubernetes/pull/26415)). And we’ll also introduce a Taint API object ([\#18263](https://github.com/kubernetes/kubernetes/pull/18263)) indicating whether the node is schedulable. They are sufficient for the current use case. Other than introducing new API objects blindly, we’d prefer to consolidate the existing objects instead.  
 Therefore NodeProblemDetector will use Event and NodeCondition to report node problems to apiserver.
 
-### **Problem Type** {#problem-type}
+### Problem Type
 
 Based on the severity, node problems are currently divided into 2 categories:
 
 * **Permanent:** Problems that impact long enough that the node is unavailable for hosting some kind of pods. NodeProblemDetector will report permanent problem as a NodeCondition.  
 * **Temporary:** Problems that have limited impact on pod hosting, but are informative and useful. NodeProblemDetector will report temporary problem as an Event.
 
-### **NodeCondition** {#nodecondition}
+### NodeCondition
 
 Following is the current [NodeCondition](https://github.com/kubernetes/kubernetes/blob/v1.3.0-alpha.4/pkg/api/types.go#L1894-L1901) api object:
 
@@ -148,7 +148,7 @@ Open issues:
 * Should we remove NodeCondition when Status is false?  
   * No. Discussed in [\#25773](https://github.com/kubernetes/kubernetes/issues/25773)
 
-### **Event** {#event}
+### Event
 
 Following is the current [Event](https://github.com/kubernetes/kubernetes/blob/v1.3.0-alpha.4/pkg/api/types.go#L2255-L2286) api object:
 
@@ -170,9 +170,9 @@ type Event struct {
 * Reason & Message: The same with NodeCondition.  
 * Type: Type is severity of the problem. Now there are only *Normal* and *Warning*, at least we should add *Error (?)*.
 
-## **Architecture** {#architecture}
+## Architecture
 
-### **Proposals** {#proposals}
+### Proposals
 
 **Alternative 1: NodeProblemDetector gathers problems from problem daemons and synchronizes with apiserver. *(current proposal)***  
 NodeProblemDetector is the centralized daemon, gathers node problems from all problem daemons on the node, consolidates the information and synchronizes with apiserver.
@@ -206,11 +206,11 @@ No centralized daemon needed, each problem daemon directly talks with apiserver.
     * Hard to control api library version used by different problem daemons.  
   * Worse debugability. Multiple daemon could update the same NodeStatus, it would be even harder to debug. ([related issue](https://github.com/kubernetes/node-problem-detector/issues/9))
 
-## **Deployment** {#deployment}
+## Deployment
 
 Deployment indicates how NodeProblemDetector and problem daemons are deployed on the node. The following proposals assume NodeProblemDaemon running as the centralized daemon ([Architecture Alternative 1](#proposals))
 
-### **Proposals** {#proposals-1}
+### Proposals
 
 **Alternative 1: Run NodeProblemDetector and problem daemons as different containers in the same pod. *(current proposal)***  
 **Alternative 2: Run NodeProblemDetector as native process, problem daemons as pods.**
@@ -248,11 +248,11 @@ Deployment indicates how NodeProblemDetector and problem daemons are deployed on
   * Pod management overhead is higher than container management.  
   * Flexible deployment also means hard to deploy. NodeProblemDetector and different problem daemons are deployed separately.
 
-## **Report Pipeline** {#report-pipeline}
+## Report Pipeline
 
 For [Architecture Alternative 1](#proposals), we need to design the report pipeline from problem daemons to NodeProblemDetector and then to apiserver.
 
-### **Problem Daemon \-\> NodeProblemDetector** {#problem-daemon-->-nodeproblemdetector}
+### Problem Daemon \-\> NodeProblemDetector
 
 All the following proposals assume that NodeProblemDetector and problem daemons are running as different containers in the same pod ([Deployment Alternative 1](#proposals-1)). For other deployment approaches, these proposals are also applicable, but may be more complex.  
 **Alternative 1: Problem daemon pushes problem to NodeProblemDetector.**  
@@ -282,7 +282,7 @@ Define problem fetching interface. Each problem daemon exposes problem fetching 
 * **Option 2: Interface from problem daemon.**  
   * NodeProblemDetector defines RESTful interface, each problem daemon has a sidecar implementing the interface.
 
-### **NodeProblemDetector \-\> APIServer** {#nodeproblemdetector-->-apiserver}
+### NodeProblemDetector \-\> APIServer
 
 NodeProblemDetector uses Kubernetes api client library to report events and node conditions.  
 For events, it uses [event recorder](https://github.com/kubernetes/kubernetes/blob/master/pkg/client/record/event.go).  
@@ -298,7 +298,7 @@ For node conditions, it needs to update the node conditions once changed, and al
 
 Mostly different components should take in charge of different node conditions, a condition should seldom be written by multiple components, so Option 2 is a better choice.
 
-## **Problem Report Interface** {#problem-report-interface}
+## Problem Report Interface
 
 Problem report interface is the interface between NodeProblemDetector and problem daemons. The following interface definition assumes problem daemons will push problem to NodeProblemDetector ([Report Pipeline Alternative 1](#problem-daemon--\>-nodeproblemdetector)).
 
@@ -362,7 +362,7 @@ The server side implementation of the interface is simple. The client side needs
 * **Rate Limit.** When there are problems, the client should accumulate events and conditions for a period of time and do batch report.  
 * **Error Handling.** The client should handle update failure. When there is update failure, it should be configured to either discard or retry.
 
-## **LogMonitor** {#logmonitor}
+## LogMonitor
 
 LogMonitor monitors and analyses specified log and report problems according to predefined rules. It is the first problem daemon introduced both for demonstration purpose and Kubernetes’ urgent requirement.  
 Kubernetes is suffering from kernel deadlock and docker bug for a long time: [\#19986](https://github.com/kubernetes/kubernetes/issues/19986#issuecomment-174141729), [\#20096](https://github.com/kubernetes/kubernetes/issues/20096) etc. LogMonitor is designed to monitor logs such as kernel log and docker log, identify known issues and report them as node problems.  
@@ -412,7 +412,7 @@ type Rule struct {
 
 By implementing different Translators and defining different rules, LogMonitor can support most kinds of logs and detect problems with stable patterns.
 
-# **Project Information** {#project-information}
+# Project Information
 
 Project Location: [https://github.com/kubernetes/node-problem-detector](https://github.com/kubernetes/node-problem-detector)  
 Team Mailing List: [kubernetes-node-team](https://groups.google.com/a/google.com/forum/#!forum/kubernetes-node)@
