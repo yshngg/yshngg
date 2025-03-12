@@ -267,7 +267,7 @@ Define problem reporting interface. NodeProblemDetector exposes problem reportin
 * **Option 2: Network based endpoint. *(current proposal)***  
   * NodeProblemDetector exposes known network endpoint. Problem daemons report problem to the endpoint.
 
-**Alternative 1.2: NodeProblemDetector pulls problems from Problem daemon.**  
+**Alternative 2: NodeProblemDetector pulls problems from Problem daemon.**  
 Define problem fetching interface. Each problem daemon exposes problem fetching interface from endpoint, and NodeProblemDetector periodically pulls problems from problem daemons.
 
 * Pros:  
