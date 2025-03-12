@@ -117,17 +117,14 @@ Based on the severity, node problems are currently divided into 2 categories:
 Following is the current [NodeCondition](https://github.com/kubernetes/kubernetes/blob/v1.3.0-alpha.4/pkg/api/types.go#L1894-L1901) api object:
 
 ```Go
-type Event struct {
-	InvolvedObject ObjectReference
-	Reason string
-	Message string
-	Source EventSource
-	FirstTimestamp unversioned.Time
-	LastTimestamp unversioned.Time
-	Count int32
-	Type string
+type NodeCondition struct {
+	Type               NodeConditionType
+	Status             ConditionStatus
+	LastHeartbeatTime  unversioned.Time
+	LastTransitionTime unversioned.Time
+	Reason             string
+	Message            string
 }
-
 ```
 
 * Type: Type indicates the name of the bad node condition caused by the problem.  
@@ -155,8 +152,18 @@ Open issues:
 
 Following is the current [Event](https://github.com/kubernetes/kubernetes/blob/v1.3.0-alpha.4/pkg/api/types.go#L2255-L2286) api object:
 
-| type Event struct {	InvolvedObject ObjectReference	Reason string	Message string	Source EventSource	FirstTimestamp unversioned.Time	LastTimestamp unversioned.Time	Count int32	Type string } |
-| :---- |
+```Go
+type Event struct {
+	InvolvedObject ObjectReference
+	Reason string
+	Message string
+	Source EventSource
+	FirstTimestamp unversioned.Time
+	LastTimestamp unversioned.Time
+	Count int32
+	Type string
+}
+```
 
 * InvolvedObject: InvovledObject is set to Node ObjectReference.  
 * Source: Name of the source problem daemon.  
