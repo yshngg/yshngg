@@ -17,3 +17,4 @@ Here are some ideas to get you started:
 
 - [Node Problem Detector Design Doc](<node-problem-detector/Node_Problem_Detector_V0(EXTERNAL).md>)
 - [The Almighty Pause Container](almighty-pause-container/The_Almighty_Pause_Container.md)
+- [A Deep Dive Into Kubernetes Informers](kubernetes-informers/A_Deep_Dive_Into_Kubernetes_Informers.md)
