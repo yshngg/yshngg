@@ -19,3 +19,4 @@ Here are some ideas to get you started:
 - [The Almighty Pause Container](almighty-pause-container/The_Almighty_Pause_Container.md)
 - [A Deep Dive Into Kubernetes Informers](kubernetes-informers/A_Deep_Dive_Into_Kubernetes_Informers.md)
 - [An introduction to Go Kubernetes' informers](kubernetes-informers/An_Introduction_To_Go_Kubernetes'_Informers.md)
+- [So you wanna write Kubernetes controllers?](kubernetes-controllers/So_You_Wanna_Write_Kubernetes_Controllers.md)
