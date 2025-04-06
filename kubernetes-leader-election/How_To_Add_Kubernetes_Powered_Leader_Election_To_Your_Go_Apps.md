@@ -123,8 +123,7 @@ What's nice about the `leaderelection` package is that it provides a callback-ba
 
 ### Testing it out
 
-To test this, lets spin up a test cluster using [kind](https://kind.sigs.k8s.io/).
-
+To test this, let's spin up a test cluster using [kind](https://kind.sigs.k8s.io/).
 ```
 $ kind create cluster
 
