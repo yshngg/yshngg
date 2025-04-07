@@ -21,3 +21,4 @@ Here are some ideas to get you started:
 - [An introduction to Go Kubernetes' informers](kubernetes-informers/An_Introduction_To_Go_Kubernetes'_Informers.md)
 - [So you wanna write Kubernetes controllers?](kubernetes-controllers/So_You_Wanna_Write_Kubernetes_Controllers.md)
 - [Go: Best Practices for Production Environments](go-best-practices/Go_Best_Practices_for_Production_Environments.md)
+- [What's in a name? (Go Names Talk 2014)](go-best-practices/What's_In_A_Name_(Go_Names_Talk_2014).md)
