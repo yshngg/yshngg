@@ -22,3 +22,4 @@ Here are some ideas to get you started:
 - [So you wanna write Kubernetes controllers?](kubernetes-controllers/So_You_Wanna_Write_Kubernetes_Controllers.md)
 - [Go: Best Practices for Production Environments](go-best-practices/Go_Best_Practices_for_Production_Environments.md)
 - [What's in a name? (Go Names Talk 2014)](go-best-practices/What's_In_A_Name_(Go_Names_Talk_2014).md)
+- [How to add Kubernetes-powered leader election to your Go apps](kubernetes-leader-election/How_To_Add_Kubernetes_Powered_Leader_Election_To_Your_Go_Apps.md)
