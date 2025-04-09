@@ -1,6 +1,7 @@
 ---
 title: "Practical OpenAPI in Go"
 author: "Alex Pliutau"
+originalLink: https://packagemain.tech/p/practical-openapi-in-golang
 ---
 
 # Practical OpenAPI in Go
