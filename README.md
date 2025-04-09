@@ -23,3 +23,4 @@ Here are some ideas to get you started:
 - [Go: Best Practices for Production Environments](go-in-production/README.md)
 - [What's in a name? (Go Names Talk 2014)](go-names-talk/README.md)
 - [How to add Kubernetes-powered leader election to your Go apps](kubernetes-leader-election/README.md)
+- [Practical OpenAPI in Go](go-practical-openapi/README.md)
