@@ -96,7 +96,7 @@ As an open source container orchestration platform, people may run Kubernetes in
 
 ## System Diagram
 
-![](images/image1.png)
+![](system-diagram.png)
 
 # Detailed Design
 
@@ -368,7 +368,7 @@ LogMonitor monitors and analyses specified log and report problems according to 
 Kubernetes is suffering from kernel deadlock and docker bug for a long time: [\#19986](https://github.com/kubernetes/kubernetes/issues/19986#issuecomment-174141729), [\#20096](https://github.com/kubernetes/kubernetes/issues/20096) etc. LogMonitor is designed to monitor logs such as kernel log and docker log, identify known issues and report them as node problems.  
 Following is the brief architecture of LogMonitor:
 
-![](images/image2.png)
+![](logmonitor-architecture.png)
 
 - **Log Monitor:** Log Monitor is the main loop. It gets logs from Log Watcher, stores them in Log Buffer, matches problem patterns in Log Buffer and reports problems if there is a match.
 - **Log Buffer:** Log Buffer buffers latest n lines of logs, and supports regex pattern matching in latest logs.
