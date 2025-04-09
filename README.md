@@ -15,11 +15,11 @@ Here are some ideas to get you started:
 - ⚡ Fun fact: ...
 -->
 
-- [Node Problem Detector Design Doc](<node-problem-detector/Node_Problem_Detector_V0(EXTERNAL).md>)
-- [The Almighty Pause Container](almighty-pause-container/The_Almighty_Pause_Container.md)
-- [A Deep Dive Into Kubernetes Informers](kubernetes-informers/A_Deep_Dive_Into_Kubernetes_Informers.md)
-- [An introduction to Go Kubernetes' informers](kubernetes-informers/An_Introduction_To_Go_Kubernetes'_Informers.md)
-- [So you wanna write Kubernetes controllers?](kubernetes-controllers/So_You_Wanna_Write_Kubernetes_Controllers.md)
-- [Go: Best Practices for Production Environments](go-best-practices/Go_Best_Practices_for_Production_Environments.md)
-- [What's in a name? (Go Names Talk 2014)](go-best-practices/What's_In_A_Name_(Go_Names_Talk_2014).md)
-- [How to add Kubernetes-powered leader election to your Go apps](kubernetes-leader-election/How_To_Add_Kubernetes_Powered_Leader_Election_To_Your_Go_Apps.md)
+- [Node Problem Detector Design Doc](node-problem-detector-v0/README.md)
+- [The Almighty Pause Container](almighty-pause-container/README.md)
+- [An introduction to Go Kubernetes' informers](kubernetes-informers-intro/README.md)
+- [A Deep Dive Into Kubernetes Informers](kubernetes-informers/README.md)
+- [So you wanna write Kubernetes controllers?](kubernetes-controllers/README.md)
+- [Go: Best Practices for Production Environments](go-in-production/README.md)
+- [What's in a name? (Go Names Talk 2014)](go-names-talk/README.md)
+- [How to add Kubernetes-powered leader election to your Go apps](kubernetes-leader-election/README.md)

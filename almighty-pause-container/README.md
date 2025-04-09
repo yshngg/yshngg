@@ -21,7 +21,7 @@ c4e998ec4d5d        gcr.io/google_containers/pause-amd64:3.0    "/pause" ...
 
 What are these "pause" containers and why are there so many of them? What's going on?
 
-[![Sorry to be pedantic but it's not a pod. It's a container.](images/image1.png)](https://x.com/IanMLewis/status/913554746115424256)
+[![Sorry to be pedantic but it's not a pod. It's a container.](x-tweet-screenshot.png)](https://x.com/IanMLewis/status/913554746115424256)
 
 In order to answer these questions, we need to take a step back and look at how pods in Kubernetes are implemented, particularly with the Docker/containerd runtime. If you haven't already done so, please read my [previous post](https://www.ianlewis.org/en/what-are-kubernetes-pods-anyway) on Kubernetes pods.
 
@@ -79,7 +79,7 @@ docker run -d --name ghost --net=container:pause --ipc=container:pause --pid=con
 
 In both cases we specify the pause container as the container whose namespaces we want to join. This will effectively create our pod. If you access `http://localhost:8080/` you should be able to see ghost running through an nginx proxy because the network namespace is shared among the pause, nginx, and ghost containers.
 
-![The pause container](images/image2.png)
+![The pause container](pause-container.png)
 
 If you think all of this is complex, you're right; it is. And we haven't even gotten into how to monitor and manage the lifetimes of these containers. The nice thing about Kubernetes is that through pods, Kubernetes manages all of this for you.
 
@@ -89,7 +89,7 @@ In Linux, processes in a PID namespace form a tree with each process having a pa
 
 Processes can start other processes using the `fork` and `exec` syscalls. When they do this, the new process' parent is the process that called the `fork` syscall. `fork` is used to start another copy of the running process and `exec` is used to replace the current process with a new one, keeping the same PID (in order to run a totally separate application you need to run the `fork` and `exec` syscalls. A process creates a new copy of itself as a child process with a new PID using `fork` and then when the child process runs it checks if it's the child process and runs `exec` to replace itself with the one you actually want to run. Most languages provide a way to do this via a single function). Each process has an entry in the OS process table. This records info about the process' state and exit code. When a child process has finished running, its process table entry remains until the parent process has retrieved its exit code using the `wait` syscall. This is called "reaping" zombie processes.
 
-![Beware of zombies](images/zombie.png)
+![Beware of zombies](zombie.png)
 
 > [CC0 Creative Commons](https://creativecommons.org/publicdomain/zero/1.0/deed.en) https://pixabay.com/en/zombie-warning-road-sign-roadsign-147945/
 

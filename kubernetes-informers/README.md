@@ -2,7 +2,7 @@
 
 _By Farhan - October 03, 2021_
 
-![Kubernetes Informers](images/image1.png)
+![Kubernetes Informers](kubediff.png)
 
 I wanted to understand more about how Kubernetes controllers are implemented. Building controllers with **[controller-runtime](https://github.com/kubernetes-sigs/kubebuilder)** is pretty easy but it masks many details on how the event-oriented architecture of client-go works underneath.
 
@@ -16,7 +16,7 @@ However, continuous polling for retrieving information on the resources can degr
 
 If you are confused on how this glues in to a controller, [here](https://github.com/kubernetes/sample-controller/blob/master/docs/images/client-go-controller-interaction.jpeg) is a diagram to explain the flow.
 
-![Client-go Controller Interaction](images/image2.png)
+![Client-go Controller Interaction](client-go-controller-interaction.png)
 
 ## How Does It Work?
 
