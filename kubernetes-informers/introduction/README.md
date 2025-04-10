@@ -7,8 +7,6 @@ link: https://macias.info/entry/202109081800_k8s_informers.md
 
 # An introduction to Go Kubernetes' informers
 
-Posted on September 8, 2021
-
 This article shows you the tool that the [Kubernetes Go client library](https://pkg.go.dev/k8s.io/client-go/informers)
 provides to keep an updated in-memory snapshot of your cluster resources.
 
