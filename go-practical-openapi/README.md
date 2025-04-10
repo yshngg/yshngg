@@ -6,11 +6,9 @@ originalLink: https://packagemain.tech/p/practical-openapi-in-golang
 
 # Practical OpenAPI in Go
 
-> From OpenAPI Specification to Go Server.
+From OpenAPI Specification to Go Server.
 
 [Watch on YouTube](https://www.youtube.com/watch?v=87au30fl5e4)
-
-#### Share this post
 
 Well-structured and documented APIs are pleasure to work with. And nowadays the de-facto standard is [OpenAPI](https://www.openapis.org/), which comes with a good methodology of defining an API interface first, and only then constructing everything around it. Making it easier to understand, implement, and consume those APIs. And standards matter, they allow different teams, regardless of their technology stack, to effectively communicate about and work with the same API.
 
