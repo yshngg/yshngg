@@ -1,3 +1,10 @@
+---
+title: An introduction to Go Kubernetes' informers
+author: Mario Macías Lloret
+date: 2021-09-08
+link: https://macias.info/entry/202109081800_k8s_informers.md
+---
+
 # An introduction to Go Kubernetes' informers
 
 Posted on September 8, 2021
