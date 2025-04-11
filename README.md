@@ -24,3 +24,4 @@ Here are some ideas to get you started:
 - [What's in a name? (Go Names Talk 2014)](go-names-talk/README.md)
 - [How to add Kubernetes-powered leader election to your Go apps](kubernetes-leader-election/README.md)
 - [Practical OpenAPI in Go](go-practical-openapi/README.md)
+- [Introducing Operators: Putting Operational Knowledge into Software](kubernetes-operators/README.md)
