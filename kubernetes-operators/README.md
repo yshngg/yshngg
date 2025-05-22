@@ -93,7 +93,7 @@ A: This shouldn't change anything for new users except make it easier for them t
 
 **Q: Is the code available for etcd Operator and Prometheus Operator today?**
 
-A: Yes! They can be found on GitHub at [https://github.com/coreos/etcd-operator](s://github.com/coreos/etcd-operator) and [https://github.com/prometheus-operator/prometheus-operator](https://github.com/prometheus-operator/prometheus-operator).
+A: Yes! They can be found on GitHub at [https://github.com/coreos/etcd-operator](https://github.com/coreos/etcd-operator) and [https://github.com/prometheus-operator/prometheus-operator](https://github.com/prometheus-operator/prometheus-operator).
 
 **Q: Do you have plans for other Operators?**
 
