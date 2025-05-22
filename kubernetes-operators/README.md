@@ -28,7 +28,7 @@ To demonstrate the Operator concept in running code, we have two concrete exampl
 
 ## How is an Operator Built?
 
-Operators build upon two central Kubernetes concepts: Resources and Controllers. As an example, the built-in [ReplicaSet](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/) resource lets users set a desired number number of Pods to run, and controllers inside Kubernetes ensure the desired state set in the ReplicaSet resource remains true by creating or removing running Pods. There are many fundamental controllers and resources in Kubernetes that work in this manner, including [Services](https://kubernetes.io/docs/concepts/services-networking/service/), [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/), and [DaemonSets](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/).
+Operators build upon two central Kubernetes concepts: Resources and Controllers. As an example, the built-in [ReplicaSet](https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/) resource lets users set a desired number of Pods to run, and controllers inside Kubernetes ensure the desired state set in the ReplicaSet resource remains true by creating or removing running Pods. There are many fundamental controllers and resources in Kubernetes that work in this manner, including [Services](https://kubernetes.io/docs/concepts/services-networking/service/), [Deployments](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/), and [DaemonSets](https://kubernetes.io/docs/concepts/workloads/controllers/daemonset/).
 
 Example 1a: A single pod is running, and the user updates the desired Pod count to 3.
 
