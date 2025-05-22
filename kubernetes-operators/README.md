@@ -19,7 +19,7 @@ With Kubernetes, it is relatively easy to manage and scale web apps, mobile back
 
 A larger challenge is managing stateful applications, like databases, caches, and monitoring systems. These systems require application domain knowledge to correctly scale, upgrade, and reconfigure while protecting against data loss or unavailability. We want this application-specific operational knowledge encoded into software that leverages the powerful Kubernetes abstractions to run and manage the application correctly.
 
-An Operator is software that encodes this domain knowledge and extends the Kubernetes API through the [third party resources](https://web.archive.org/web/20170129131616/http%3A//kubernetes.io/docs/user-guide/thirdpartyresources/) mechanism, enabling users to create, configure, and manage applications. Like Kubernetes's built-in resources, an Operator doesn't manage just a single instance of the application, but multiple instances across the cluster.
+An Operator is software that encodes this domain knowledge and extends the Kubernetes API through the [Custom Resources](https://kubernetes.io/docs/concepts/extend-kubernetes/api-extension/custom-resources/) mechanism, enabling users to create, configure, and manage applications. Like Kubernetes's built-in resources, an Operator doesn't manage just a single instance of the application, but multiple instances across the cluster.
 
 To demonstrate the Operator concept in running code, we have two concrete examples to announce as open source projects today:
 
