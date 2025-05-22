@@ -32,16 +32,23 @@ Operators build upon two central Kubernetes concepts: Resources and Controllers.
 
 Example 1a: A single pod is running, and the user updates the desired Pod count to 3.
 
-![](example-1a.svg)
+<p align="center">
+   <img src="example-1a.svg" alt="" style="width:50%; height:auto;">
+</p>
 
 Example 1b: A few moments later and controllers inside of Kubernetes have created new Pods to meet the user's request.
-![](example-1b.svg)
+
+<p align="center">
+   <img src="example-1b.svg" alt="" style="width:50%; height:auto;">
+</p>
 
 An Operator builds upon the basic Kubernetes resource and controller concepts and adds a set of knowledge or configuration that allows the Operator to execute common application tasks. For example, when scaling an etcd cluster manually, a user has to perform a number of steps: create a DNS name for the new etcd member, launch the new etcd instance, and then use the etcd administrative tools (`etcdctl member add`) to tell the existing cluster about this new member. Instead with the _etcd Operator_ a user can simply increase the etcd cluster size field by 1.
 
 Example 2: A backup is triggered by a user with kubectl
 
-![](example-2.svg)
+<p align="center">
+   <img src="example-2.svg" alt="" style="width:50%; height:auto;">
+</p>
 
 Other examples of complex administrative tasks that an Operator might handle include safe coordination of application upgrades, configuration of backups to offsite storage, service discovery via native Kubernetes APIs, application TLS certificate configuration, and disaster recovery.
 
