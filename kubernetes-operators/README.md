@@ -1,5 +1,5 @@
 ---
-title: Introducing Operators: Putting Operational Knowledge into Software
+title: "Introducing Operators: Putting Operational Knowledge into Software"
 author: Brandon Philips
 date: 2016-11-03
 link: https://web.archive.org/web/20170129131616/https://coreos.com/blog/introducing-operators.html
