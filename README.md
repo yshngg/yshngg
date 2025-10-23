@@ -17,9 +17,9 @@ Here are some ideas to get you started:
 
 - [Node Problem Detector Design Doc](node-problem-detector-v0/README.md)
 - [The Almighty Pause Container](almighty-pause-container/README.md)
-- [Introducing Prometheus Agent Mode, an Efficient and Cloud-Native Way for Metric Forwarding](prometheus-agent-mode-introduction/README.md)
-- [An introduction to Go Kubernetes' informers](kubernetes-informers/introduction//README.md)
-- [A Deep Dive Into Kubernetes Informers](kubernetes-informers/deep-dive//README.md)
+- [Introducing Prometheus Agent Mode, an Efficient and Cloud-Native Way for Metric Forwarding](prometheus-agent-mode-introduction/README.md) - [Simplified Chinese](prometheus-agent-mode-introduction/README_zh-CN.md)
+- [An introduction to Go Kubernetes' informers](kubernetes-informers/introduction/README.md)
+- [A Deep Dive Into Kubernetes Informers](kubernetes-informers/deep-dive/README.md)
 - [So you wanna write Kubernetes controllers?](kubernetes-controllers/README.md)
 - [Go: Best Practices for Production Environments](go-in-production/README.md)
 - [What's in a name? (Go Names Talk 2014)](go-names-talk/README.md)
