@@ -2,13 +2,21 @@
 
 November 16, 2021 by Bartlomiej Plotka (@bwplotka)
 
+<details open>
+
+<summary>Additional languages</summary>
+
+- [Simplified Chinese](README_zh-CN.md)
+
+</details>
+
 > Bartek Płotka has been a Prometheus Maintainer since 2019 and Principal Software Engineer at Red Hat. Co-author of the CNCF Thanos project. CNCF Ambassador and tech lead for the CNCF TAG Observability. In his free time, he writes a book titled "Efficient Go" with O'Reilly. Opinions are my own!
 
 What I personally love in the Prometheus project, and one of the many reasons why I joined the team, was the laser focus on the project's goals. Prometheus was always about pushing boundaries when it comes to providing pragmatic, reliable, cheap, yet invaluable metric-based monitoring. Prometheus' ultra-stable and robust APIs, query language, and integration protocols (e.g. Remote Write and [OpenMetrics](https://openmetrics.io/)) allowed the Cloud Native Computing Foundation (CNCF) metrics ecosystem to grow on those strong foundations. Amazing things happened as a result:
 
-* We can see community exporters for getting metrics about virtually everything e.g. [containers](https://github.com/google/cadvisor), [eBPF](https://github.com/cloudflare/ebpf_exporter), [Minecraft server statistics](https://github.com/sladkoff/minecraft-prometheus-exporter) and even [plants' health when gardening](https://megamorf.gitlab.io/2019/07/14/monitoring-plant-health-with-prometheus/).
-* Most people nowadays expect cloud-native software to have an HTTP/HTTPS `/metrics` endpoint that Prometheus can scrape. A concept developed in secret within Google and pioneered globally by the Prometheus project.
-* The observability paradigm shifted. We see SREs and developers rely heavily on metrics from day one, which improves software resiliency, debuggability, and data-driven decisions!
+- We can see community exporters for getting metrics about virtually everything e.g. [containers](https://github.com/google/cadvisor), [eBPF](https://github.com/cloudflare/ebpf_exporter), [Minecraft server statistics](https://github.com/sladkoff/minecraft-prometheus-exporter) and even [plants' health when gardening](https://megamorf.gitlab.io/2019/07/14/monitoring-plant-health-with-prometheus/).
+- Most people nowadays expect cloud-native software to have an HTTP/HTTPS `/metrics` endpoint that Prometheus can scrape. A concept developed in secret within Google and pioneered globally by the Prometheus project.
+- The observability paradigm shifted. We see SREs and developers rely heavily on metrics from day one, which improves software resiliency, debuggability, and data-driven decisions!
 
 In the end, we hardly see Kubernetes clusters without Prometheus running there.
 
@@ -20,19 +28,19 @@ In this (lengthy) blog post, I would love to introduce a new operational mode of
 
 The core design of Prometheus has been unchanged for the project's entire lifetime. Inspired by [Google's Borgmon monitoring system](https://sre.google/sre-book/practical-alerting/#the-rise-of-borgmon), you can deploy a Prometheus server alongside the applications you want to monitor, tell Prometheus how to reach them, and allow to scrape the current values of their metrics at regular intervals. Such a collection method, which is often referred to as the "pull model", is the core principle that [allows Prometheus to be lightweight and reliable](https://prometheus.io/blog/2016/07/23/pull-does-not-scale-or-does-it/). Furthermore, it enables application instrumentation and exporters to be dead simple, as they only need to provide a simple human-readable HTTP endpoint with the current value of all tracked metrics (in OpenMetrics format). All without complex push infrastructure and non-trivial client libraries. Overall, a simplified typical Prometheus monitoring deployment looks as below:
 
-![Prometheus high-level view](./prom.png)
+![Prometheus high-level view](prom.png)
 
 This works great, and we have seen millions of successful deployments like this over the years that process dozens of millions of active series. Some of them for longer time retention, like two years or so. All allow to query, alert, and record metrics useful for both cluster admins and developers.
 
 However, the cloud-native world is constantly growing and evolving. With the growth of managed Kubernetes solutions and clusters created on-demand within seconds, we are now finally able to treat clusters as "cattle", not as "pets" (in other words, we care less about individual instances of those). In some cases, solutions do not even have the cluster notion anymore, e.g. [kcp](https://github.com/kcp-dev/kcp), [Fargate](https://aws.amazon.com/fargate/) and other platforms.
 
-![Yoda](./yoda.gif)
+![Yoda](yoda.webp)
 
 The other interesting use case that emerges is the notion of **Edge** clusters or networks. With industries like telecommunication, automotive and IoT devices adopting cloud-native technologies, we see more and more much smaller clusters with a restricted amount of resources. This is forcing all data (including observability) to be transferred to remote, bigger counterparts as almost nothing can be stored on those remote nodes.
 
-What does that mean? That means monitoring data has to be somehow aggregated, presented to users and sometimes even stored on the *global* level. This is often called a **Global-View** feature.
+What does that mean? That means monitoring data has to be somehow aggregated, presented to users and sometimes even stored on the _global_ level. This is often called a **Global-View** feature.
 
-Naively, we could think about implementing this by either putting Prometheus on that global level and scraping metrics across remote networks or pushing metrics directly from the application to the central location for monitoring purposes. Let me explain why both are generally *very* bad ideas:
+Naively, we could think about implementing this by either putting Prometheus on that global level and scraping metrics across remote networks or pushing metrics directly from the application to the central location for monitoring purposes. Let me explain why both are generally _very_ bad ideas:
 
 🔥 Scraping across network boundaries can be a challenge if it adds new unknowns in a monitoring pipeline. The local pull model allows Prometheus to know why exactly the metric target has problems and when. Maybe it's down, misconfigured, restarted, too slow to give us metrics (e.g. CPU saturated), not discoverable by service discovery, we don't have credentials to access or just DNS, network, or the whole cluster is down. By putting our scraper outside of the network, we risk losing some of this information by introducing unreliability into scrapes that is unrelated to an individual target. On top of that, we risk losing important visibility completely if the network is temporarily down. Please don't do it. It's not worth it. (:
 
@@ -43,11 +51,11 @@ Naively, we could think about implementing this by either putting Prometheus on 
 
 Prometheus introduced three ways to support the global view case, each with its own pros and cons. Let's briefly go through those. They are shown in orange color in the diagram below:
 
-![Prometheus global view](./prom-remote.png)
+![Prometheus global view](prom-remote.png)
 
-* **Federation** was introduced as the first feature for aggregation purposes. It allows a global-level Prometheus server to scrape a subset of metrics from a leaf Prometheus. Such a "federation" scrape reduces some unknowns across networks because metrics exposed by federation endpoints include the original samples' timestamps. Yet, it usually suffers from the inability to federate all metrics and not lose data during longer network partitions (minutes).
-* **Prometheus Remote Read** allows selecting raw metrics from a remote Prometheus server's database without a direct PromQL query. You can deploy Prometheus or other solutions (e.g. Thanos) on the global level to perform PromQL queries on this data while fetching the required metrics from multiple remote locations. This is really powerful as it allows you to store data "locally" and access it only when needed. Unfortunately, there are cons too. Without features like [Query Pushdown](https://github.com/thanos-io/thanos/issues/305) we are in extreme cases pulling GBs of compressed metric data to answer a single query. Also, if we have a network partition, we are temporarily blind. Last but not least, certain security guidelines are not allowing ingress traffic, only egress one.
-* Finally, we have **Prometheus Remote Write**, which seems to be the most popular choice nowadays. Since the agent mode focuses on remote write use cases, let's explain it in more detail.
+- **Federation** was introduced as the first feature for aggregation purposes. It allows a global-level Prometheus server to scrape a subset of metrics from a leaf Prometheus. Such a "federation" scrape reduces some unknowns across networks because metrics exposed by federation endpoints include the original samples' timestamps. Yet, it usually suffers from the inability to federate all metrics and not lose data during longer network partitions (minutes).
+- **Prometheus Remote Read** allows selecting raw metrics from a remote Prometheus server's database without a direct PromQL query. You can deploy Prometheus or other solutions (e.g. Thanos) on the global level to perform PromQL queries on this data while fetching the required metrics from multiple remote locations. This is really powerful as it allows you to store data "locally" and access it only when needed. Unfortunately, there are cons too. Without features like [Query Pushdown](https://github.com/thanos-io/thanos/issues/305) we are in extreme cases pulling GBs of compressed metric data to answer a single query. Also, if we have a network partition, we are temporarily blind. Last but not least, certain security guidelines are not allowing ingress traffic, only egress one.
+- Finally, we have **Prometheus Remote Write**, which seems to be the most popular choice nowadays. Since the agent mode focuses on remote write use cases, let's explain it in more detail.
 
 ### Remote Write
 
@@ -81,7 +89,7 @@ From Prometheus `v2.32.0` (next release), everyone will be able to run the Prome
 
 The Agent mode optimizes Prometheus for the remote write use case. It disables querying, alerting, and local storage, and replaces it with a customized TSDB WAL. Everything else stays the same: scraping logic, service discovery and related configuration. It can be used as a drop-in replacement for Prometheus if you want to just forward your data to a remote Prometheus server or any other Remote-Write-compliant project. In essence it looks like this:
 
-![Prometheus agent](./agent.png)
+![Prometheus agent](agent.png)
 
 The best part about Prometheus Agent is that it's built into Prometheus. Same scraping APIs, same semantics, same configuration and discovery mechanism.
 
@@ -155,10 +163,10 @@ Similarly to Prometheus remote-write tutorial, if you would like to try the hand
 
 I hope you found this interesting! In this post, we walked through the new cases that emerged like:
 
-* edge clusters
-* limited access networks
-* large number of clusters
-* ephemeral and dynamic clusters
+- edge clusters
+- limited access networks
+- large number of clusters
+- ephemeral and dynamic clusters
 
 We then explained the new Prometheus Agent mode that allows efficiently forwarding scraped metrics to the remote write endpoints.
 

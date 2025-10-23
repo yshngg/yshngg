@@ -2,13 +2,21 @@
 
 2021年11月16日 作者：Bartlomiej Plotka (@bwplotka)
 
+<details open>
+
+<summary>Additional languages</summary>
+
+- [English](README.md)
+
+</details>
+
 > Bartek Płotka 自2019年起担任 Prometheus 维护者，是 Red Hat 的首席软件工程师。CNCF Thanos 项目的合著者。CNCF 大使和 CNCF TAG Observability 的技术负责人。在业余时间，他正在与 O'Reilly 合作撰写一本名为《Efficient Go》的书。观点仅代表个人意见！
 
 我个人喜欢 Prometheus 项目的原因之一，也是我加入团队的重要原因之一，是该项目对目标的专注度。Prometheus 始终致力于在提供实用、可靠、廉价但极具价值的基于指标的监控方面突破界限。Prometheus 超稳定且强大的 API、查询语言和集成协议（例如 Remote Write 和 [OpenMetrics](https://openmetrics.io/)）使得云原生计算基金会（CNCF）的指标生态系统能够基于这些坚实的基础发展。由此产生了惊人的成果：
 
-* 我们可以看到社区导出器几乎可以获取所有内容的指标，例如[容器](https://github.com/google/cadvisor)、[eBPF](https://github.com/cloudflare/ebpf_exporter)、[Minecraft 服务器统计](https://github.com/sladkoff/minecraft-prometheus-exporter)，甚至[园艺时的植物健康状况](https://megamorf.gitlab.io/2019/07/14/monitoring-plant-health-with-prometheus/)。
-* 如今，大多数人期望云原生软件具有 Prometheus 可以抓取的 HTTP/HTTPS `/metrics` 端点。这个概念最初在 Google 内部秘密开发，并由 Prometheus 项目在全球范围内率先推广。
-* 可观测性范式发生了转变。我们看到 SRE 和开发人员从一开始就严重依赖指标，这提高了软件的弹性、可调试性和数据驱动决策能力！
+- 我们可以看到社区导出器几乎可以获取所有内容的指标，例如[容器](https://github.com/google/cadvisor)、[eBPF](https://github.com/cloudflare/ebpf_exporter)、[Minecraft 服务器统计](https://github.com/sladkoff/minecraft-prometheus-exporter)，甚至[园艺时的植物健康状况](https://megamorf.gitlab.io/2019/07/14/monitoring-plant-health-with-prometheus/)。
+- 如今，大多数人期望云原生软件具有 Prometheus 可以抓取的 HTTP/HTTPS `/metrics` 端点。这个概念最初在 Google 内部秘密开发，并由 Prometheus 项目在全球范围内率先推广。
+- 可观测性范式发生了转变。我们看到 SRE 和开发人员从一开始就严重依赖指标，这提高了软件的弹性、可调试性和数据驱动决策能力！
 
 最终，我们几乎看不到没有运行 Prometheus 的 Kubernetes 集群。
 
@@ -20,13 +28,13 @@ Prometheus 社区的强大专注度也使得其他开源项目得以发展，将
 
 Prometheus 的核心设计在其整个生命周期中保持不变。受 [Google 的 Borgmon 监控系统](https://sre.google/sre-book/practical-alerting/#the-rise-of-borgmon) 的启发，你可以将 Prometheus 服务器部署在要监控的应用程序旁边，告诉 Prometheus 如何访问它们，并允许定期抓取其指标的当前值。这种通常被称为 "拉取模型" 的收集方法是 [使 Prometheus 轻量级且可靠](https://prometheus.io/blog/2016/07/23/pull-does-not-scale-or-does-it/) 的核心原则。此外，它使得应用程序检测和导出器变得非常简单，因为它们只需要提供一个简单的人类可读的 HTTP 端点，其中包含所有跟踪指标的当前值（以 OpenMetrics 格式）。所有这些都不需要复杂的推送基础设施和非平凡的客户端库。总体而言，简化的典型 Prometheus 监控部署如下所示：
 
-![Prometheus 高级视图](./prom.png)
+![Prometheus 高级视图](prom.png)
 
 这工作得很好，多年来我们已经看到了数百万个成功的部署，处理着数千万个活动序列。其中一些用于较长时间保留，比如两年左右。所有这些都允许查询、警报和记录对集群管理员和开发人员都有用的指标。
 
 然而，云原生世界在不断发展。随着托管 Kubernetes 解决方案和在几秒钟内按需创建的集群的增长，我们现在终于能够将集群视为 "牛" 而不是 "宠物"（换句话说，我们对这些单个实例的关注较少）。在某些情况下，解决方案甚至不再具有集群概念，例如 [kcp](https://github.com/kcp-dev/kcp)、[Fargate](https://aws.amazon.com/fargate/) 和其他平台。
 
-![Yoda](./yoda.webp)
+![Yoda](yoda.webp)
 
 出现的另一个有趣用例是**边缘**集群或网络的概念。随着电信、汽车和物联网设备等行业采用云原生技术，我们看到越来越多资源受限的更小集群。这迫使所有数据（包括可观测性数据）传输到远程、更大的对应物，因为几乎没有任何数据可以存储在这些远程节点上。
 
@@ -43,11 +51,11 @@ Prometheus 的核心设计在其整个生命周期中保持不变。受 [Google 
 
 Prometheus 引入了三种支持全局视图情况的方式，每种方式都有其优缺点。让我们简要介绍一下这些。它们在下面的图表中以橙色显示：
 
-![Prometheus 全局视图](./prom-remote.png)
+![Prometheus 全局视图](prom-remote.png)
 
-* **联邦**是第一个为聚合目的引入的功能。它允许全局级别的 Prometheus 服务器从叶子 Prometheus 抓取指标的子集。这种 "联邦" 抓取减少了跨网络的一些未知因素，因为联邦端点暴露的指标包括原始样本的时间戳。然而，它通常无法联邦所有指标，并且在较长的网络分区（几分钟）期间不会丢失数据。
-* **Prometheus Remote Read** 允许从远程 Prometheus 服务器的数据库中选择原始指标，而无需直接进行 PromQL 查询。你可以在全局级别部署 Prometheus 或其他解决方案（例如 Thanos）来对这些数据执行 PromQL 查询，同时从多个远程位置获取所需的指标。这非常强大，因为它允许你 "本地" 存储数据，仅在需要时访问。不幸的是，也有缺点。没有像 [Query Pushdown](https://github.com/thanos-io/thanos/issues/305) 这样的功能，在极端情况下，我们需要拉取 GB 的压缩指标数据来回答单个查询。此外，如果我们有网络分区，我们暂时是盲目的。最后但并非最不重要的是，某些安全指南不允许入口流量，只允许出口流量。
-* 最后，我们有 **Prometheus Remote Write**，这似乎是当今最受欢迎的选择。由于 Agent 模式专注于远程写入用例，让我们更详细地解释它。
+- **联邦**是第一个为聚合目的引入的功能。它允许全局级别的 Prometheus 服务器从叶子 Prometheus 抓取指标的子集。这种 "联邦" 抓取减少了跨网络的一些未知因素，因为联邦端点暴露的指标包括原始样本的时间戳。然而，它通常无法联邦所有指标，并且在较长的网络分区（几分钟）期间不会丢失数据。
+- **Prometheus Remote Read** 允许从远程 Prometheus 服务器的数据库中选择原始指标，而无需直接进行 PromQL 查询。你可以在全局级别部署 Prometheus 或其他解决方案（例如 Thanos）来对这些数据执行 PromQL 查询，同时从多个远程位置获取所需的指标。这非常强大，因为它允许你 "本地" 存储数据，仅在需要时访问。不幸的是，也有缺点。没有像 [Query Pushdown](https://github.com/thanos-io/thanos/issues/305) 这样的功能，在极端情况下，我们需要拉取 GB 的压缩指标数据来回答单个查询。此外，如果我们有网络分区，我们暂时是盲目的。最后但并非最不重要的是，某些安全指南不允许入口流量，只允许出口流量。
+- 最后，我们有 **Prometheus Remote Write**，这似乎是当今最受欢迎的选择。由于 Agent 模式专注于远程写入用例，让我们更详细地解释它。
 
 ### Remote Write
 
@@ -81,7 +89,7 @@ Prometheus 项目还为其 API 提供官方合规性测试，例如 [remote-writ
 
 Agent 模式优化了 Prometheus 用于远程写入用例。它禁用了查询、警报和本地存储，并用定制的 TSDB WAL 替换了它们。其他所有内容保持不变：抓取逻辑、服务发现和相关配置。如果你只想将数据转发到远程 Prometheus 服务器或任何其他 Remote-Write 兼容项目，它可以作为 Prometheus 的即插即用替代品。本质上，它看起来像这样：
 
-![Prometheus agent](./agent.png)
+![Prometheus agent](agent.png)
 
 Prometheus Agent 最棒的部分是它内置在 Prometheus 中。相同的抓取 API、相同的语义、相同的配置和发现机制。
 
@@ -155,10 +163,10 @@ Agent 模式接受相同的抓取配置，具有相同的发现选项和远程�
 
 我希望你觉得这很有趣！在这篇文章中，我们介绍了出现的新情况，例如：
 
-* 边缘集群
-* 受限访问网络
-* 大量集群
-* 短暂和动态集群
+- 边缘集群
+- 受限访问网络
+- 大量集群
+- 短暂和动态集群
 
 然后我们解释了新的 Prometheus Agent 模式，它允许有效地将抓取的指标转发到远程写入端点。
 
