@@ -37,7 +37,7 @@ The flight recorder collects the execution trace as normal, but instead of writi
 
 Let's learn how to use the flight recorder with an example. Specifically, let's use it to diagnose a performance problem with an HTTP server that implements a "guess the number" game. It exposes a `/guess-number` endpoint that accepts an integer and responds to the caller informing them if they guessed the right number. There is also a goroutine that, once per minute, sends a report of all the guessed numbers to another service via an HTTP request.
 
-```
+```go
 // bucket is a simple mutex-protected counter.
 type bucket struct {
     mu      sync.Mutex
@@ -114,7 +114,7 @@ Here is the full code for the server: [https://go.dev/play/p/rX1eyKtVglF](https:
 
 Let's suppose that after deploying the application in production, we received complaints from users that some `/guess-number` calls were taking longer than expected. When we look at our logs, we see that sometimes response times exceed 100 milliseconds, while the majority of calls are on the order of microseconds.
 
-```
+```console
 2025/09/19 16:52:02 HTTP request: endpoint=/guess-number guess=69 duration=625ns
 2025/09/19 16:52:02 HTTP request: endpoint=/guess-number guess=62 duration=458ns
 2025/09/19 16:52:02 HTTP request: endpoint=/guess-number guess=42 duration=1.417µs
@@ -128,7 +128,7 @@ Regardless of whether you found the problem or not, let's dive deeper and see ho
 
 First, in `main`, we'll configure and start the flight recorder:
 
-```
+```go
 // Set up the flight recorder
 fr := trace.NewFlightRecorder(trace.FlightRecorderConfig{
     MinAge:   200 * time.Millisecond,
@@ -141,7 +141,7 @@ fr.Start()
 
 Next, we'll add a helper function to capture the snapshot and write it to a file:
 
-```
+```go
 var once sync.Once
 
 // captureSnapshot captures a flight recorder snapshot.
@@ -171,7 +171,7 @@ func captureSnapshot(fr *trace.FlightRecorder) {
 
 And finally, just before logging a completed request, we'll trigger the snapshot if the request took more than 100 milliseconds:
 
-```
+```go
 // Capture a snapshot if the response takes more than 100ms.
 // Only the first call has any effect.
 if fr.Enabled() && time.Since(start) > 100*time.Millisecond {
@@ -217,7 +217,7 @@ Between the start and the end of this goroutine running, we see a huge number of
 
 This flow implicates the `Unlock` in `sendReport`:
 
-```
+```go
 for index, b := range buckets {
     b.mu.Lock()
     defer b.mu.Unlock()
