@@ -1,8 +1,6 @@
 # Go 1.25 中的飞行记录器
 
-Carlos Amedee 和 Michael Knyszek
-
-2025年9月26日
+<sub>Carlos Amedee 和 Michael Knyszek - 2025年9月26日</sub>
 
 <details open>
 

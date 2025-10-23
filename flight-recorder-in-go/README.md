@@ -1,8 +1,6 @@
 # Flight Recorder in Go 1.25
 
-Carlos Amedee and Michael Knyszek
-
-26 September 2025
+<sub>Carlos Amedee and Michael Knysze - 26 September 2025</sub>
 
 <details open>
 
