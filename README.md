@@ -26,3 +26,4 @@ Here are some ideas to get you started:
 - [How to add Kubernetes-powered leader election to your Go apps](kubernetes-leader-election/README.md)
 - [Practical OpenAPI in Go](go-practical-openapi/README.md)
 - [Introducing Operators: Putting Operational Knowledge into Software](kubernetes-operators/README.md)
+- [Flight Recorder in Go 1.25](flight-recorder-in-go/README.md) - [Simplified Chinese](flight-recorder-in-go/README_zh-CN.md)
