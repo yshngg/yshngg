@@ -27,3 +27,4 @@ Here are some ideas to get you started:
 - [Practical OpenAPI in Go](go-practical-openapi/README.md)
 - [Introducing Operators: Putting Operational Knowledge into Software](kubernetes-operators/README.md)
 - [Flight Recorder in Go 1.25](flight-recorder-in-go/README.md) - [Simplified Chinese](flight-recorder-in-go/README_zh-CN.md)
+- [Optimizing in-process gRPC with Go 1.23 Iterators and Coroutines](go-grpc-iterators/README.md) - [Simplified Chinese](go-grpc-iterators/README_zh-CN.md)
