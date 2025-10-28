@@ -1,8 +1,6 @@
 # LXC vs. Docker: Which One Should You Use?
 
-<sub>Posted Jun 13, 2024</sub>
-
-<sub>By [Jason Perlow](https://www.docker.com/author/jason-perlow/)</sub>
+<sub>By [Jason Perlow](https://www.docker.com/author/jason-perlow/) - Posted Jun 13, 2024</sub>
 
 In today's evolving software development landscape, [containerization technology](https://www.docker.com/resources/what-container/) has emerged as a key tool for developers aiming to enhance efficiency and ensure consistency across environments. Among the various container technologies available today, Linux Containers (LXC) and Docker are two of the most popular choices. Understanding the differences between these technologies is crucial for developers to select the right tool that aligns with their specific project needs.
 
