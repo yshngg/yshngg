@@ -1,8 +1,11 @@
-# The Almighty Pause Container
+---
+Title: "LXC vs. Docker: Which One Should You Use?"
+Author: Ian Lewis
+Date: 2017-10-10
+Link: https://www.ianlewis.org/en/almighty-pause-container-on
+---
 
-_Author: Ian Lewis ([@ianlewis](https://github.com/ianlewis))_  
-_Date: Oct 10, 2017_  
-_URL: https://www.ianlewis.org/en/almighty-pause-container-on_
+# The Almighty Pause Container
 
 When checking out the nodes of your Kubernetes cluster, you may have noticed some containers called "pause" running when you do a docker ps on the node.
 
