@@ -5,6 +5,14 @@ Date: 2017-10-10
 Link: https://www.ianlewis.org/en/almighty-pause-container-on
 ---
 
+<details open>
+
+<summary>Additional languages</summary>
+
+- [Simplified Chinese](README_zh-CN.md)
+
+</details>
+
 # The Almighty Pause Container
 
 When checking out the nodes of your Kubernetes cluster, you may have noticed some containers called "pause" running when you do a docker ps on the node.
