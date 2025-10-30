@@ -1,8 +1,8 @@
 ---
-Title: "LXC vs. Docker: Which One Should You Use?"
+Title: "The Almighty Pause Container"
 Author: Ian Lewis
 Date: 2017-10-10
-Link: https://www.ianlewis.org/en/almighty-pause-container-on
+Link: https://www.ianlewis.org/en/almighty-pause-container
 ---
 
 <details open>
