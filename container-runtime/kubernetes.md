@@ -9,7 +9,7 @@ Link: https://www.ianlewis.org/en/container-runtimes-part-4-kubernetes-container
 
 <summary>Additional languages</summary>
 
-- [Simplified Chinese](kubernetes-container-run_zh-CN.md)
+- [Simplified Chinese](kubernetes_zh-CN.md)
 
 </details>
 
