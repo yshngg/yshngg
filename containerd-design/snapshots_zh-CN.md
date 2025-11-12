@@ -33,7 +33,7 @@ _Snapshot_ 表示一种文件系统状态。每个 snapshot 都有一个父级�
 ![snapshot model diagram, showing active snapshots on the left and
 committed snapshots on the right](snapshot_model.png)
 
-在该图中，可以看到活动快照 _a_ 通过以已提交快照 `P<sub>0</sub>` 为父调用 `Prepare` 创建。修改后，_a_ 变成 _a'_，通过调用 `Commit` 创建了已提交快照 `P<sub>1</sub>`。_a'_ 可以进一步修改为 _a''_，再次调用 `Commit` 可以创建第二个已提交快照 `P<sub>2</sub>`。注意这里 `P<sub>2</sub>` 的父级是 `P<sub>0</sub>` 而不是 `P<sub>1</sub>`。
+在该图中，可以看到活动快照 _a_ 通过以已提交快照 _P<sub>0</sub>_ 为父调用 `Prepare` 创建。修改后，_a_ 变成 _a'_，通过调用 `Commit` 创建了已提交快照 _P<sub>1</sub>_。_a'_ 可以进一步修改为 _a''_，再次调用 `Commit` 可以创建第二个已提交快照 _P<sub>2</sub>_。注意这里 _P<sub>2</sub>_ 的父级是 _P<sub>0</sub>_ 而不是 _P<sub>1</sub>_。
 
 ### 操作
 
