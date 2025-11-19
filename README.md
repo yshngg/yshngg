@@ -30,3 +30,4 @@ Here are some ideas to get you started:
 - [LXC vs. Docker: Which One Should You Use?](lxc-vs-docker/) - [Simplified Chinese](lxc-vs-docker/README_zh-CN.md)
 - [containerd Design](containerd-design/)
 - [runc Documentation](runc-docs/)
+- [Go pprof documentation](go-pprof/) - [Simplified Chinese](go-pprof/README_zh-CN.md)
