@@ -87,7 +87,7 @@ summary: Go 1.25 includes a new experimental garbage collector, Green Tea.
 
 <noscript>
     <center>
-    <i>For the best experience, view <a href="/blog/greenteagc">this blog post</a>
+    <i>For the best experience, view <a href="https://go.dev/blog/greenteagc">this blog post</a>
     in a browser with JavaScript enabled.</i>
     </center>
 </noscript>
@@ -103,10 +103,10 @@ We know some workloads don't benefit as much, or even at all, so your feedback
 is crucial to helping us move forward.
 Based on the data we have now, we plan to make it the default in Go 1.26.
 
-To report back with any problems, [file a new issue](/issue/new).
+To report back with any problems, [file a new issue](https://github.com/golang/go/issues/new).
 
 To report back with any successes, reply to [the existing Green Tea issue](
-/issue/73581).
+https://github.com/golang/go/issues/73581).
 
 What follows is a blog post based on Michael Knyszek's GopherCon 2025 talk.
 
@@ -1056,7 +1056,7 @@ that's written by a [code generator](https://cs.opensource.google/go/go/+/master
 Aside from the expansion functions, it's really not a lot of code.
 Most of it is dramatically simplified by the fact that we can perform most of the above
 operations on data that sits purely in registers.
-And, hopefully soon this assembly code [will be replaced with Go code](/issue/73787)!
+And, hopefully soon this assembly code [will be replaced with Go code](https://github.com/golang/go/issues/73787)!
 
 Credit to Austin Clements for devising this process.
 It's incredibly cool, and incredibly fast!
@@ -1073,7 +1073,7 @@ For example, if an application spends 10% of its time in the garbage collector, 
 would translate to between a 1% and 4% overall CPU reduction, depending on the specifics of
 the workload.
 A 10% reduction in garbage collection CPU time is roughly the modal improvement.
-(See the [GitHub issue](/issue/73581) for some of these details.)
+(See the [GitHub issue](https://github.com/golang/go/issues/73581) for some of these details.)
 
 We've rolled Green Tea out inside Google, and we see similar results at scale.
 
@@ -1112,7 +1112,7 @@ tweaks and improvements based on feedback we've collected so far.
 If you can, we encourage you to try at Go tip-of-tree!
 If you prefer to use Go 1.25, we'd still love your feedback.
 See [this GitHub
-comment](/issue/73581#issuecomment-2847696497) with some details on
+comment](https://github.com/golang/go/issues/73581#issuecomment-2847696497) with some details on
 what diagnostics we'd be interested in seeing, if you can share, and the preferred channels for
 reporting feedback.
 
