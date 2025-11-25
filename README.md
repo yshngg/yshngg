@@ -26,7 +26,7 @@ Here are some ideas to get you started:
 - [How to add Kubernetes-powered leader election to your Go apps](kubernetes-leader-election/)
 - [Practical OpenAPI in Go](go-practical-openapi/)
 - [Introducing Operators: Putting Operational Knowledge into Software](kubernetes-operators/)
-- [Flight Recorder in Go 1.25](flight-recorder-in-go/) - [Simplified Chinese](flight-recorder-in-go/README_zh-CN.md)
+- [Flight Recorder in Go 1.25](flight-recorder/) - [Simplified Chinese](flight-recorder/README_zh-CN.md)
 - [LXC vs. Docker: Which One Should You Use?](lxc-vs-docker/) - [Simplified Chinese](lxc-vs-docker/README_zh-CN.md)
 - [containerd Design](containerd-design/)
 - [runc Documentation](runc-docs/)
