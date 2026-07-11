@@ -1,7 +1,7 @@
 ## Hi there 👋
 
 <!--
-**yusheng-guo/yusheng-guo** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+**yshngg/yshngg** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
 Here are some ideas to get you started:
 
@@ -14,6 +14,15 @@ Here are some ideas to get you started:
 - 😄 Pronouns: ...
 - ⚡ Fun fact: ...
 -->
+
+<div align="center">
+  <a href="https://commit-history.com/yshngg">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://commit-history.com/embed/yshngg?theme=dark" />
+      <img alt="yshngg's commit history" src="https://commit-history.com/embed/yshngg" />
+    </picture>
+  </a>
+</div>
 
 - [Node Problem Detector Design Doc](node-problem-detector-v0/)
 - [The Almighty Pause Container](almighty-pause-container/) - [Simplified Chinese](almighty-pause-container/README_zh-CN.md)
