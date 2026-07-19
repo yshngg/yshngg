@@ -40,3 +40,4 @@ Here are some ideas to get you started:
 - [containerd Design](containerd-design/)
 - [runc Documentation](runc-docs/)
 - [The Green Tea Garbage Collector](greenteagc/) - [Simplified Chinese](greenteagc/README_zh-CN.md)
+- [Faster Go maps with Swiss Tables](swisstable/) - [Simplified Chinese](swisstable/README_zh-CN.md)
